@@ -1,0 +1,63 @@
+<%- content_for :breadcrumb do %>
+  <h2 class="prj"><%= link_to (h @task.project.title), @task.project %></h2>
+<%- end %>
+<%= get_flash_messages -%>
+<div class="box box-75">
+  <div class="boxin">
+    <div class="top_task_content">
+      <div class="text_content">
+
+        <p>Comments on task:</p>
+      <h3 class="task_now">
+        <%=h @task.title %>
+      </h3>
+      </div>
+    </div>
+    <div class="content">
+      <div class="text_content">
+
+    <p>
+      <%= RedCloth.new(@task.description).to_html %>
+    </p>
+
+    <p>
+      <b>Assigned to:</b>
+      <%=h @task.user.login %>
+    </p>
+    <ul>
+      <% @task.tags.each do |tag| %>
+        <li><%= link_to tag.name, project_tag_path(@task.project, tag) %></li>
+      <% end %>
+    </ul>
+
+    <div class="divider"></div>
+    <h3>Comments</h3>
+    <%= render @task.comments %>
+
+    <% form_for @comment, :url => comment_task_path(@task), :html => { :multipart => true, :class => "fields" } do |f| -%>
+      <%= f.error_messages %>
+      <%= gravatar_for current_user %>
+      <div class='comment_indent'>
+        <div class='comment_header'>
+          <strong>Leave a comment...</strong>
+        </div>
+        <%= f.text_area :comment %>
+        <dl>
+          <dt>File to upload:</dt>
+          <dd>
+            <%- f.fields_for :upload do |u| %>
+              <%= u.hidden_field :project_id, :value => @task.project.id %>
+              <%= u.hidden_field :user_id, :value => current_user.id %>
+              <%= u.file_field :node, :class => 'file' %>
+            <% end -%>
+          </dd>
+        </dl>
+        <div class="sep">
+          <%= f.submit "Submit", :disable_with => 'Submiting...', :class => "button" %>
+        </div>
+      </div>
+    <% end -%>
+  </div>
+  </div>
+  </div>
+</div>

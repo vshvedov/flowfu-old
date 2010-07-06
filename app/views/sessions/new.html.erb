@@ -1,0 +1,34 @@
+<% form_for resource_name, resource, :url => session_path(resource_name), :html => {:class => 'table'} do |f| -%>
+  <div class="inner-form">
+    <%= get_flash_messages -%>
+    <table cellspacing="0">
+      <tr>
+        <th><%= f.label :email %></th>
+        <td><%= f.text_field :email, :class => 'txt' %></td>
+      </tr>
+      <tr>
+        <th><%= f.label :password %></th>
+        <td><%= f.password_field :password, :class => 'txt pwd' %></td><!-- class error for wrong filled inputs -->
+      </tr>
+      <% if devise_mapping.rememberable? -%>
+        <tr>
+          <th></th>
+          <td><%= f.check_box :remember_me %><%= f.label :remember_me, nil, :class => 'checkbox' %></td>
+        </tr>
+      <% end -%>
+      <tr>
+        <th></th>
+        <td class="tr proceed">
+          <input type="submit" value="Login" class="button">
+        </td>
+      </tr>
+    </table>
+    <div class="divider"></div>
+    <table>
+      <tr>
+        <th></th>
+          <td><%= link_to t('devise.passwords.link'), new_password_path(resource_name) %></td>
+      </tr>
+    </table>
+  </div>
+<% end -%>

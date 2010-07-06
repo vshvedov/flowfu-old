@@ -1,0 +1,10 @@
+<h2>
+  <span class="h-ico ico-dashboard"><span>Projects</span></span>
+  <span class="h-arrow"></span>
+</h2>
+<ul class="clearfix">
+  <!-- Admin sections - feel free to add/modify your own icons are located in "css/img/h-ico/*" -->
+  <%- @all_projects.each do |p| %>
+    <li><%= link_to content_tag(:span, h(p.title)), p, :class => '' -%></li>
+  <% end -%>
+</ul>

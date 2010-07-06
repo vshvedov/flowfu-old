@@ -1,0 +1,22 @@
+<tr class="task-row <%= task.closed? ? 'closed' : 'opened' %>">
+  <%- if is_admin? -%><td class="tc"><%= check_box_tag :"#{task.id}_closed", task.id, task.closed? %></td><%- end -%>
+    <td class="tl">
+      <%= link_to h(task.title), task, :class => "task_name" %>
+      <% unless task.description.blank? %>
+        <div class="task_descr">
+          <%= h truncate(task.description, 300) %>
+        </div>
+      <% end %>
+      <span class="meta">
+        <%= h task.user.login %>
+        <%= l task.created_at, :format => :short %>
+      </span>
+    </td>
+  <td class='tc'><%= link_to task.comments.count, task, :class => 'ico-comms' %></td>
+  <%- if is_admin? -%><td class='tc'>
+    <ul class='actions'>
+      <li><%= link_to image_tag('led-ico/pencil.png'), edit_task_path(task), :class => 'ico' %></li>
+      <li><%= link_to image_tag('led-ico/delete.png'), task, :class => 'ico', :confirm => 'Are you sure?', :method => :delete %></li>
+    </ul>
+  </td><%- end -%>
+</tr>

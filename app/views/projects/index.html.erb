@@ -1,0 +1,23 @@
+<%= get_flash_messages -%>
+<div class="box box-100">
+  <div class="boxin">
+    <div class="header">
+      <h3>Projects</h3>
+      <%- if is_admin? -%><%= link_to 'New project', new_project_path, :class => 'button right' %><%- end -%>
+    </div>
+    <div class="content">
+      <table cellspacing="0">
+        <thead>
+          <tr>
+            <th class='tl'>Title</th>
+            <td class="tl">Description</td>
+            <td class="tl">Tasks</td>
+            <%- if is_admin? -%><td class="tl">Actions</td><%- end -%>
+          </tr>
+        </thead>
+        <%- @first = true -%>
+        <%= render @projects -%>
+      </table>
+    </div>
+  </div>
+</div>

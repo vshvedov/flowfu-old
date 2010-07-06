@@ -1,0 +1,40 @@
+<%- time = Time.now %>
+<table class="calendar" cellspacing="0">
+  <thead>
+    <!--
+    <tr>
+      <th class="tc month" colspan="7">
+        <a href="#" title="Go to October 2009"><img src="/images/cal-left.png" alt="Go to October 2009" /></a>
+        <%= l time, :format => '%B' %>
+        <%= time.year %>
+        <a href="#" title="Go to January 2010"><img src="/images/cal-right.png" alt="Go to January 2010" /></a>
+      </th>
+    </tr>
+    -->
+    <tr>
+      <th class="tc">Mon</th>
+      <th class="tc">Tue</th>
+      <th class="tc">Wed</th>
+      <th class="tc">Thu</th>
+      <th class="tc">Fri</th>
+      <th class="tc">Sat</th>
+      <th class="tc">Sun</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="first"><!-- .first for first row of the table (only if there is thead) -->
+      <%- (0..6).map{|i|time.beginning_of_week + i.days}.each do |day| %>
+        <%- classes = [] %>
+        <%- classes << 'inactive' unless day.month == time.month %>
+        <%- classes << 'today' if day == Time.now.beginning_of_day %>
+        <td class="<%= classes.join(' ') %>">
+          <strong><%= day.day %></strong>
+          <div class="items">
+            <%= render :partial => 'projects/opened_task', :collection => @project.tasks.opened_in_day(day) %>
+            <%= render :partial => 'projects/closed_task', :collection => @project.tasks.closed_in_day(day) %>
+          </div>
+        </td>
+      <% end -%>
+    </tr>
+  </tbody>
+</table>

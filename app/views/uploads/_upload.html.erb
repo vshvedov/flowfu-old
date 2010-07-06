@@ -1,0 +1,15 @@
+<li>
+  <%= link_to image_tag(upload.image? ? upload.node.url(:thumb) : upload.icon, :title =>  upload.node_file_name, :alt => upload.node_content_type.parameterize), upload.node.url, :class => 'upload' %>
+  <% unless upload.description.blank? %>
+    <div class="upload_descr">
+      <%= h upload.description %>
+    </div>
+  <% end %>
+  <div class="meta">
+    <%= h upload.user.login %>
+    <%= l upload.created_at, :format => :short %>
+  </div>
+  <%- if is_admin? -%>
+      <%= link_to image_tag('led-ico/delete.png'), upload, :class => 'ico', :confirm => 'Are you sure?', :method => :delete %>
+  <%- end -%>
+</li>

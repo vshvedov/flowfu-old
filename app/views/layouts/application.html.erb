@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="cs">
+    <head>
+  
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta http-equiv="content-style-type" content="text/css" />
+        <meta http-equiv="content-script-type" content="text/javascript" />
+        
+        <title><%= page_title %></title>
+        
+        <link rel="stylesheet" type="text/css" href="/stylesheets/blue.css" media="screen, projection, tv" /><!-- Change name of the stylesheet to change colors (blue/red/black/green/brown/orange/purple) -->
+        <link rel="stylesheet" type="text/css" href="/stylesheets/custom.css" media="screen, projection, tv" />
+        <!--[if lte IE 7.0]><link rel="stylesheet" type="text/css" href="css/ie.css" media="screen, projection, tv" /><![endif]-->
+    <!--[if IE 8.0]>
+      <style type="text/css">
+        form.fields fieldset {margin-top: -10px;}
+      </style>
+    <![endif]-->
+    <%= javascript_include_tag 'jquery', 'applications', 'jquery.tools.min' %>
+    <%= js_erb_auto_include_tag %>
+    <%= yield :head %>
+    <!-- Adding support for transparent PNGs in IE6: -->
+    <!--[if lte IE 6]>
+      <script type="text/javascript" src="js/ddpng.js"></script>
+      <script type="text/javascript">
+        DD_belatedPNG.fix('#nav #h-wrap .h-ico');
+        DD_belatedPNG.fix('.ico img');
+        DD_belatedPNG.fix('.msg p');
+        DD_belatedPNG.fix('table.calendar thead th.month a img');
+        DD_belatedPNG.fix('table.calendar tbody img');
+      </script>
+    <![endif]-->
+    </head>
+    <body>
+
+    <div id="header">
+      <div class="inner-container clearfix">
+        <h1 id="logo">
+          <a class="home" href="/" title="Go to Workfu's homepage">
+            Workfu 
+            <span class="ir"></span>
+          </a><br />
+        </h1>
+        <div id="userbox">
+          <div class="inner">
+            <strong><%= current_user.login %></strong>
+            <ul class="clearfix">
+              <li><%= link_to 'profile', edit_user_registration_path %></li>
+              <%-if is_admin? -%><li><%= link_to 'my tasks', my_tasks_path %></li><%- end -%>
+            </ul>
+          </div>
+          <%= link_to 'log out<span class="ir"></span>', destroy_user_session_path, :id => 'logout' %>
+        </div><!-- #userbox -->
+      </div><!-- .inner-container -->
+    </div><!-- #header -->
+    <div id="nav">
+      <div class="inner-container clearfix">
+        <div id="h-wrap">
+          <div class="inner">
+            <%= render 'layouts/projects_droplist' %>
+          </div>
+        </div><!-- #h-wrap -->
+        <%= yield :breadcrumb %>
+      </div><!-- .inner-container -->
+    </div><!-- #nav -->
+    
+    <div id="container">
+      <div class="inner-container">
+        <%= yield -%>
+      <div id="footer"><!-- footer, maybe you don't need it -->
+        <p>© 2010 Remfu, <a href="#" target="_blank">http://remfu.com</a></p>
+      </div>
+      
+      </div><!-- .inner-container -->
+    </div><!-- #container -->
+    
+    </body>
+</html>

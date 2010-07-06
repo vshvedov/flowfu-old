@@ -1,0 +1,4 @@
+<li class="<%= user.is_admin? ? 'admin' : 'client' -%>">
+  <%= check_box_tag :"#{user.id}_included", user.id, @project.users.include?(user) %>
+  <%= user.login %>
+</li>

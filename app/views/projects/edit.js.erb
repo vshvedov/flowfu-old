@@ -1,0 +1,31 @@
+$(document).ready(function(){
+  $('ul.users :checkbox').live('click', function(){
+    var checkbox = $(this);
+    var included = checkbox.attr('checked');
+    log(included)
+    var url = included ? '<%= add_user_project_path(@project) -%>' : '<%= remove_user_project_path(@project) -%>';
+    checkbox.hide()
+    checkbox.after('<span class="loading" />')
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {user_id:checkbox.val()},
+      dataType: 'json',
+      success: function(data){
+        if(data.added){
+          checkbox.attr('checked', true);
+          $('#in_project').prepend(checkbox.parent())
+        }else{
+          checkbox.attr('checked', false);
+          $('#out_project').prepend(checkbox.parent())
+        }
+        checkbox.parent().find('span.loading').remove()
+        checkbox.show()
+      },
+      error: function(request, status, errorThrown){
+        error('Error: ' + status + '\n' + errorThrown)
+      }
+    })
+    return false
+  })
+})

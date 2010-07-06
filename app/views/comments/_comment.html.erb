@@ -1,0 +1,22 @@
+<div class='comment'>
+  <%= gravatar_for comment.user %>
+  <div class='comment_indent'>
+    <div class='comment_header'>
+      <strong><%= comment.user.login %></strong>
+      <%= l comment.created_at, :format => :short %>
+    </div>
+    <div class="comment_body">
+      <%= comment.get_comment %>
+    </div>
+    <%- unless comment.upload.blank? %>
+      <div class='comment_attachment'>
+        <%- link_to comment.upload.node.url do %>
+          <span>
+            <%= image_tag(comment.upload.image? ? comment.upload.node.url(:thumb) : comment.upload.icon, :title =>  comment.upload.node_file_name, :alt => comment.upload.node_content_type.parameterize) %>
+          </span>
+          <strong><%= comment.upload.node_file_name %></strong>
+        <%- end %>
+      </div>
+    <% end -%>
+  </div>
+</div>

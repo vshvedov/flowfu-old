@@ -1,0 +1,28 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  title: MyString
+  description: MyText
+  user: 
+  closed_at: 2010-03-30 15:43:05
+
+two:
+  title: MyString
+  description: MyText
+  user: 
+  closed_at: 2010-03-30 15:43:05
+
+# == Schema Information
+#
+# Table name: tasks
+#
+#  id          :integer         not null, primary key
+#  title       :string(255)
+#  description :text
+#  user_id     :integer
+#  project_id  :integer
+#  closed_at   :datetime
+#  created_at  :datetime
+#  updated_at  :datetime
+#
+

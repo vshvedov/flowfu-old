@@ -1,0 +1,5 @@
+log/
+config/database.yml
+.swp
+public/system/
+config/initializers/paperclip.rb

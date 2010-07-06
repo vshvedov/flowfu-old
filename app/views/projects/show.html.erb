@@ -1,0 +1,132 @@
+<%= get_flash_messages -%>
+
+<%- content_for :breadcrumb do %>
+  <h2 class="prj"><%=h @project.title %></h2>
+  <%- if is_admin? -%>
+    <%= link_to 'Edit', edit_project_path(@project), :class => 'button altbutton' %>
+  <%- end -%>
+<% end -%>
+
+<div class="box altbox box-100">
+  <div class="boxin">
+    <div class="header">
+      <h3>This week activity</h3>
+    </div>
+    <div class="content">
+      <%= render 'calendar' %>
+    </div>
+  </div>
+</div>
+
+<div class="box box-75"><!-- .altbox for alternative box's color -->
+  <div class="boxin">
+    <div class="header">
+      <h3>Tasks</h3>
+      <%- if is_admin? -%><%= link_to 'New task', new_project_task_path(@project), :class => 'button right' %><%- end -%>
+    </div>
+    <div class="content">
+      <table id="tasks" cellspacing="0">
+        <thead>
+          <tr>
+            <%- if is_admin? -%><td></td><%- end -%>
+            <td class="tl">Task</td>
+            <td class="tc">Comments</td>
+            <%- if is_admin? -%><td class='tc'>Actions</td><%- end -%>
+          </tr>
+        </thead>
+        <tbody>
+          <%= render @tasks %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="box box-25 last">
+  <div class="boxin bottom_space">
+    <div class="content">
+      <div class="text_content">
+        <p>
+          <strong>Description:</strong> <br />
+          <%=h @project.description %>
+        </p>
+        <div class="divider"></div>
+        <p>
+          <strong>Project started:</strong>
+          <%=l @project.created_at, :format => :short %>
+        </p>
+      </div>
+    </div>
+  </div>
+
+    <%- unless @tags.blank? -%>
+      <div class="boxin bottom_space">
+        <div class="header">
+          <h3>Tags</h3>
+        </div>
+        <div class="content">
+          <div class="text_content">
+            <ul>
+              <% tag_cloud @tags, %w(tag-w1 tag-w2 tag-w3 tag-w4) do |tag, css_class| %>
+                <li><%= link_to tag.name, project_tag_path(@project, tag), :class => css_class %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    <%- end -%>
+    
+    <div class="boxin bottom_space">
+      <div class="header">
+        <h3>Developers</h3>
+      </div>
+      <div class="content">
+        <div class="text_content">
+          <ul>
+            <% Role.first.users.each do |user| %>
+              <li><%= link_to user.login, project_user_path(@project, user) %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div id="uploads" class="boxin">
+      <div class="header">
+        <h3>Files</h3>
+        <%- if is_admin? -%>
+          <%= link_to 'Upload file', '#', :class => 'button start-upload right', :rel => '#upload_overlay' %>
+        <% end -%>
+      </div>
+      <div class="content">
+        <div class="text_content">
+          <%- if @project.uploads.blank? %>
+            <p>There is no files in this project yet.</p>
+          <% end -%>
+          <ul class="upload_list">
+            <%= render :partial => "uploads/upload_list", :collection => @project.uploads, :as => :upload %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<%- if is_admin? -%>
+  <div class='simple_overlay' id='upload_overlay'>
+    <% form_for @upload || Upload.new, :html => { :multipart => true, :class => "fields" } do |f| -%>
+      <div class="inner-form">
+        <%= f.hidden_field :project_id, :value => @project.id %>
+        <%= f.hidden_field :user_id, :value => current_user.id %>
+        <dl>
+          <dt>File:</dt>
+          <dd><%= f.file_field :node, :class => 'file' %></dd>
+          <dt>Description:</dt>
+          <dd><%= f.text_area :description %></dd>
+        </dl>
+        <div class="sep">
+          <%= f.submit "Submit", :disable_with => 'Submiting...', :class => 'button' %>
+        </div>
+      </div>
+    <% end -%>
+  </div>
+<% end -%>

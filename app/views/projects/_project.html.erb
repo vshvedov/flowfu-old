@@ -1,0 +1,12 @@
+<%- content_tag :tr, :class => (@first ? 'first' : nil) do %>
+  <td class='tl'><%= link_to h(project.title), project %></td>
+  <td><%=truncate h(project.description), :length => 100 %></td>
+  <td class='tl'><%= link_to project.tasks.opened.count, project, :class => 'ico-comms' %></td>
+  <%- if is_admin? -%><td class='tl'>
+    <ul class='actions'>
+      <li><%= link_to image_tag('led-ico/pencil.png'), edit_project_path(project), :class => 'ico' %></li>
+      <li><%= link_to image_tag('led-ico/delete.png'), project, :class => 'ico', :confirm => 'Are you sure?', :method => :delete %></li>
+    </ul>
+  </td><%- end -%>
+<% end -%>
+<%- @first = false %>

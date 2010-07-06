@@ -1,0 +1,41 @@
+<%- content_for :breadcrumb do %>
+  <h2 class="prj"><%=h @task.project.title %></h2>
+<% end -%>
+<div class="box box-100">
+  <div class="boxin">
+    <div class="header">
+      <h3>Edit Task</h3>
+    </div>
+    <% form_for @task, :html => { :class => "basic" } do |f| %>
+      <div class="inner-form">
+        <%= f.error_messages %>
+        <dl>
+          <dt><%= f.label :title %></dt>
+          <dd>
+          <%= f.text_field :title, :class => "txt" %>
+          </dd>
+          <dt class="ttop">
+            <%= f.label :description %><br />
+          </dt><!-- .ttop for vertical-align: top -->
+          <dd>
+             <%= f.text_area :description %>
+          </dd>
+          <dt><%= f.label :user_id, 'Performer' %></dt>
+          <dd>
+          <%= f.select :user_id, Role.get('admin').users.map{|u| [u.login, u.id]} %>
+          </dd>
+          <dt><%= f.label :tag_list %></dt>
+          <dd>
+          <%= f.text_field :tag_list %>
+          </dd>
+          <dt></dt>
+          <%= f.hidden_field :project_id, :value => params[:project_id] %>
+          <dd>
+            <input type="submit" value="Update" class="button">
+            <%= link_to 'Cancel', @task.project, :class => "back_link" %>
+          </dd>
+        </dl>
+      </div>
+    <% end %>
+  </div>
+</div>

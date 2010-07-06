@@ -1,0 +1,25 @@
+<% form_for resource_name, resource, :url => registration_path(resource_name), :html => {:class => 'table'} do |f| -%>
+  <div class="inner-form">
+    <%= get_flash_messages -%>
+    <table cellspacing="0">
+      <tr>
+        <th><%= f.label :email %></th>
+        <td><%= f.text_field :email, :class => 'txt' %></td>
+      </tr>
+      <tr>
+        <th><%= f.label :password %></th>
+        <td><%= f.password_field :password, :class => 'txt pwd' %></td>
+      </tr>
+      <tr>
+        <th><%= f.label :password_confirmation %></th>
+        <td><%= f.password_field :password_confirmation, :class => 'txt pwd' %></td>
+      </tr>
+      <tr>
+        <th></th>
+        <td class="tr proceed">
+          <input type="submit" value="Register" class="button">
+        </td>
+      </tr>
+    </table>
+  </div>
+<% end -%>

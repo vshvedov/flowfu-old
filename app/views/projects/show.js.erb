@@ -1,0 +1,45 @@
+$(function(){
+  $('tr.task-row :checkbox').live('click', function(){
+    var checkbox = $(this);
+    var opened = checkbox.attr('checked');
+    var url = '/tasks/' + checkbox.val() + '/'
+    if(opened){
+      url += 'close.json'
+    }else{
+      url += 'open.json'
+    }
+    checkbox.hide()
+    checkbox.after('<span class="loading" />')
+    $.ajax({
+      url: url,
+      dataType: 'json',
+      success: function(data){
+        if(data.closed){
+          checkbox.attr('checked', true);
+          checkbox.parent().parent().addClass('closed')
+          checkbox.parent().parent().removeClass('opened')
+          checkbox.parent().parent().parent().append(checkbox.parent().parent())
+        }else{
+          checkbox.attr('checked', false);
+          checkbox.parent().parent().addClass('opened')
+          checkbox.parent().parent().removeClass('closed')
+          checkbox.parent().parent().parent().prepend(checkbox.parent().parent())
+        }
+        checkbox.parent().find('span.loading').remove()
+        checkbox.show()
+      },
+      error: function(request, status, errorThrown){
+        error('Error: ' + status + '\n' + errorThrown)
+      }
+    })
+    return false
+  })
+
+$("a[rel]").overlay();
+//   $('.upload-attachment').click(function(){
+//     $(this).hide();
+//     $('form.new_upload').show();
+//     return false
+//   })
+})
+

@@ -1,0 +1,60 @@
+<%- content_for :breadcrumb do %>
+  <h2 class="prj"><%=h @project.title %></h2>
+<% end -%>
+<div class="box box-75">
+  <div class="boxin">
+    <div class="header">
+      <h3>Edit Project</h3>
+    </div>
+    <% form_for @project, :html => { :class => "basic" } do |f| %>
+      <div class="inner-form">
+        <%= f.error_messages %>
+        <dl>
+          <dt><%= f.label :title %></dt>
+          <dd>
+          <%= f.text_field :title, :class => "txt" %>
+          </dd>
+          <dt class="ttop">
+            <%= f.label :description %><br />
+          </dt><!-- .ttop for vertical-align: top -->
+          <dd>
+             <%= f.text_area :description %>
+          </dd>
+          <dt></dt>
+          <dd>
+            <input type="submit" value="Update" class="button">
+            <%= link_to 'Back', projects_path, :class => "back_link" %>
+          </dd>
+        </dl>
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="box box-25 last">
+  <div class="boxin">
+    <div class="header">
+      <h3>Project users</h3>
+    </div>
+    <div class="content">
+      <div class='text_content'>
+        <ul class="users" id="in_project">
+          <%= render :partial => 'projects/user', :collection => @project.users %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="box box-25 last">
+  <div class="boxin">
+    <div class="header">
+      <h3>Add user</h3>
+    </div>
+    <div class="content">
+      <div class='text_content'>
+        <ul class="users" id="out_project">
+          <%= render :partial => 'projects/user', :collection => User.all - @project.users %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

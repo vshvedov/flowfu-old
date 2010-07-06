@@ -1,0 +1,29 @@
+<div class="box box-100">
+  <div class="boxin">
+    <div class="header">
+      <h3>New Project</h3>
+    </div>
+    <% form_for @project, :html => { :class => "basic" } do |f| %>
+      <div class="inner-form">
+        <%= f.error_messages %>
+        <dl>
+          <dt><%= f.label :title %></dt>
+          <dd>
+          <%= f.text_field :title, :class => "txt" %>
+          </dd>
+          <dt class="ttop">
+            <%= f.label :description %><br />
+          </dt><!-- .ttop for vertical-align: top -->
+          <dd>
+             <%= f.text_area :description %>
+          </dd>
+          <dt></dt>
+          <dd>
+            <input type="submit" value="Create" class="button">
+            <%= link_to 'Back', projects_path, :class => "back_link" %>
+          </dd>
+        </dl>
+      </div>
+    <% end %>
+  </div>
+</div>

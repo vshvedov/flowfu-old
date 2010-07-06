@@ -1,0 +1,24 @@
+
+<div class="box box-75"><!-- .altbox for alternative box's color -->
+  <div class="boxin">
+    <div class="header">
+      <h3>All my tasks</h3>
+    </div>
+    <div class="content">
+      <table id="tasks" cellspacing="0">
+        <thead>
+          <tr>
+            <%- if is_admin? -%><td></td><%- end -%>
+            <td class="tl">Task</td>
+            <td class="tc">Comments</td>
+            <%- if is_admin? -%><td class='tc'>Actions</td><%- end -%>
+          </tr>
+        </thead>
+        <tbody>
+          <%= render @tasks %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
